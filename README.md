@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NewsPulse
+
+![Modern Newsletter Webapp Interface](./public//newsdash.png "Modern Newsletter Webapp Interface")
+
+## Description
+
+NewsPulse is a modern, fast, and scalable newsletter web application powered by Next.js and Bun. It features seamless user authentication via GitHub, intuitive newsletter creation, and reliable email delivery. The app boasts a sleek, responsive UI built with Tailwind CSS and uses TypeScript for type safety and maintainability. This project emphasizes performance and developer experience through a cutting-edge tech stack.
+
+## Features
+
+- User authentication with GitHub using NextAuth.js
+- Newsletter management (creation, editing, sending)
+- Subscriber management
+- Responsive and modern UI with Tailwind CSS
+- Fast development and runtime with Bun
+- Secure and scalable backend with Next.js API routes
+- Email delivery integration (to be added)
+
+## Tech Stack
+
+- **Frontend & Backend:** Next.js (React framework with server-side rendering)
+- **Runtime:** Bun
+- **Styling:** Tailwind CSS
+- **Authentication:** NextAuth.js with GitHub provider
+- **Language:** TypeScript
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- [Bun](https://bun.sh/) installed and configured
+- GitHub OAuth app credentials (Client ID and Client Secret)
+- Node.js (optional, for some tools if needed)
+
+### Installation
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ayushedith/newspulse.git
+cd newspulse
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies using Bun:
+```bash
+bun install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Create a `.env.local` file with the following environment variables:
+```bash
+NEXTAUTH_SECRET=your-strong-random-secret
+NEXTAUTH_URL=http://localhost:3000
 
-## Learn More
+GITHUB_ID=your_github_client_id
+GITHUB_SECRET=your_github_client_secret
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+- Sign in using your GitHub account.
+- Access the dashboard to create and manage newsletters.
+- Add subscribers and send newsletters (feature to be implemented).
+- Customize email templates and settings.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature-name`).
+3. Commit your changes (`git commit -m 'Add feature'`).
+4. Push to the branch (`git push origin feature-name`).
+5. Open a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Created with ❤️ using Next.js, Bun, and Tailwind CSS.
+
