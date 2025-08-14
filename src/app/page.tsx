@@ -1,103 +1,123 @@
-import Image from "next/image";
+"use client";
+
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { data: session, status } = useSession();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-start px-6 py-12 text-gray-900">
+      {/* Header */}
+      <header className="w-full max-w-4xl mb-12 text-center">
+        <h1 className="text-5xl font-extrabold mb-4">
+          Welcome to <span className="text-indigo-600">NewsPulse</span>
+        </h1>
+        <p className="text-lg text-gray-700 max-w-xl mx-auto">
+          The modern and reliable newsletter platform that helps you connect with your audience effortlessly.
+          Create, manage, and send beautiful newsletters — all in one place.
+        </p>
+      </header>
+
+      {/* Auth Card */}
+      <section className="w-full max-w-md bg-white rounded-lg shadow-md p-8 mb-12">
+        {status === "loading" ? (
+          <p className="text-center text-indigo-600 font-semibold">Loading...</p>
+        ) : session ? (
+          <>
+            <p className="mb-6 text-center text-lg">
+              Signed in as <span className="font-medium">{session.user?.email}</span>
+            </p>
+            <button
+              onClick={() => signOut()}
+              className="w-full py-3 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition"
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => signIn("github")}
+              className="w-full py-3 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition"
+            >
+              Sign in with GitHub
+            </button>
+            <p className="mt-3 text-center text-sm text-gray-500">
+              You need a GitHub account to sign in.
+            </p>
+          </>
+        )}
+      </section>
+
+      {/* Features */}
+      <section className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-12 w-12 mb-4 text-indigo-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8c1.38 0 2.5 1.12 2.5 2.5S13.38 13 12 13s-2.5-1.12-2.5-2.5S10.62 8 12 8z"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19.07 4.93A10 10 0 105.26 18.74 10 10 0 1019.07 4.93z"
+            />
+          </svg>
+          <h3 className="text-xl font-semibold mb-2">Easy Newsletter Creation</h3>
+          <p className="text-gray-600">Intuitive editor to craft engaging newsletters in minutes.</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-12 w-12 mb-4 text-indigo-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 10h4l3-6 4 12h3"
+            />
+          </svg>
+          <h3 className="text-xl font-semibold mb-2">Subscriber Management</h3>
+          <p className="text-gray-600">Effortlessly add, remove, and organize your newsletter subscribers.</p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-12 w-12 mb-4 text-indigo-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 15a4 4 0 004 4v-4h-4zM21 9a4 4 0 00-4-4v4h4z"
+            />
+          </svg>
+          <h3 className="text-xl font-semibold mb-2">Reliable Email Delivery</h3>
+          <p className="text-gray-600">Powered by trusted email services to reach your audience every time.</p>
+        </div>
+      </section>
+
+      <footer className="mt-20 w-full max-w-4xl text-center text-gray-500 text-sm select-none">
+        &copy; {new Date().getFullYear()} NewsPulse &mdash; Built with Next.js, Bun & Tailwind CSS
       </footer>
-    </div>
+    </main>
   );
 }
