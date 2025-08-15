@@ -1,122 +1,76 @@
 "use client";
-
 import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home() {
   const { data: session, status } = useSession();
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-start px-6 py-12 text-gray-900">
-      {/* Header */}
-      <header className="w-full max-w-4xl mb-12 text-center">
-        <h1 className="text-5xl font-extrabold mb-4">
-          Welcome to <span className="text-indigo-600">NewsPulse</span>
-        </h1>
-        <p className="text-lg text-gray-700 max-w-xl mx-auto">
-          The modern and reliable newsletter platform that helps you connect with your audience effortlessly.
-          Create, manage, and send beautiful newsletters — all in one place.
-        </p>
-      </header>
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 flex items-center justify-center">
+      <div className="max-w-2xl w-full px-6 py-14 bg-white/70 backdrop-blur-lg rounded-3xl shadow-xl border border-slate-300 flex flex-col items-center">
+        <div className="mb-8 flex flex-col items-center">
+          {/* <img src="/inboxgalaxy_logo.png" alt="InboxGalaxy Logo" className="h-16 mb-4" /> */}
+          <h1 className="text-6xl font-extrabold tracking-tight text-slate-900 mb-2">
+            InboxGalaxy
+          </h1>
+          <span className="text-lg px-4 py-1 rounded-xl bg-indigo-600 bg-opacity-80 text-white font-semibold mb-4">
+            Infinite ideas, one inbox
+          </span>
+          <p className="text-slate-700 text-center font-medium text-xl">
+            Your professional platform for every kind of newsletter:
+            <span className="font-semibold text-indigo-600"> tech, art, sci-fi, and more.</span>
+            <br />
+            Designed for creators, powered by the latest technology.
+          </p>
+        </div>
 
-      {/* Auth Card */}
-      <section className="w-full max-w-md bg-white rounded-lg shadow-md p-8 mb-12">
-        {status === "loading" ? (
-          <p className="text-center text-indigo-600 font-semibold">Loading...</p>
-        ) : session ? (
-          <>
-            <p className="mb-6 text-center text-lg">
-              Signed in as <span className="font-medium">{session.user?.email}</span>
-            </p>
-            <button
-              onClick={() => signOut()}
-              className="w-full py-3 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition"
-            >
-              Sign Out
+        {/* Auth block */}
+        <div className="w-full bg-slate-200 rounded-xl shadow mb-8 p-6 flex flex-col items-center">
+          {status === "loading" ? (
+            <p className="text-indigo-500 font-bold">Authenticating...</p>
+          ) : session ? (
+            <>
+              <p className="text-slate-900 text-lg mb-3">
+                Signed in as <strong className="text-indigo-800">{session.user?.email}</strong>
+              </p>
+              <button
+                onClick={() => signOut()}
+                className="w-40 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-600 text-white font-bold shadow-lg hover:shadow-xl hover:bg-indigo-700 transition"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => signIn("github")}
+                className="w-40 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-bold shadow-lg hover:shadow-xl hover:bg-indigo-700 transition"
+              >
+                Sign in with GitHub
+              </button>
+              <p className="mt-2 text-sm text-slate-600">
+                * Only GitHub login supported.
+              </p>
+            </>
+          )}
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-4 w-full">
+          <Link href="/about">
+            <button className="w-full md:w-auto py-2 px-6 rounded-full bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition">
+              Learn About InboxGalaxy
             </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={() => signIn("github")}
-              className="w-full py-3 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition"
-            >
-              Sign in with GitHub
-            </button>
-            <p className="mt-3 text-center text-sm text-gray-500">
-              You need a GitHub account to sign in.
-            </p>
-          </>
-        )}
-      </section>
-
-      {/* Features */}
-      <section className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center text-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12 mb-4 text-indigo-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+          </Link>
+          <button
+            className="w-full md:w-auto py-2 px-6 rounded-full bg-slate-800 text-indigo-100 font-medium shadow hover:bg-slate-900 hover:text-white transition"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8c1.38 0 2.5 1.12 2.5 2.5S13.38 13 12 13s-2.5-1.12-2.5-2.5S10.62 8 12 8z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19.07 4.93A10 10 0 105.26 18.74 10 10 0 1019.07 4.93z"
-            />
-          </svg>
-          <h3 className="text-xl font-semibold mb-2">Easy Newsletter Creation</h3>
-          <p className="text-gray-600">Intuitive editor to craft engaging newsletters in minutes.</p>
+            See Features
+          </button>
         </div>
+      </div>
 
-        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center text-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12 mb-4 text-indigo-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 10h4l3-6 4 12h3"
-            />
-          </svg>
-          <h3 className="text-xl font-semibold mb-2">Subscriber Management</h3>
-          <p className="text-gray-600">Effortlessly add, remove, and organize your newsletter subscribers.</p>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center text-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12 mb-4 text-indigo-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 15a4 4 0 004 4v-4h-4zM21 9a4 4 0 00-4-4v4h4z"
-            />
-          </svg>
-          <h3 className="text-xl font-semibold mb-2">Reliable Email Delivery</h3>
-          <p className="text-gray-600">Powered by trusted email services to reach your audience every time.</p>
-        </div>
-      </section>
-
-      <footer className="mt-20 w-full max-w-4xl text-center text-gray-500 text-sm select-none">
-        &copy; {new Date().getFullYear()} NewsPulse &mdash; Built with Next.js, Bun & Tailwind CSS
+      <footer className="absolute bottom-0 left-0 w-full py-4 text-center text-slate-400 text-xs font-mono tracking-wide">
+        &copy; {new Date().getFullYear()} InboxGalaxy — Trusted, private, and modern.
       </footer>
     </main>
   );
