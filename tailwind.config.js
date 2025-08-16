@@ -6,7 +6,13 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}", // If using Next.js App Router
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        cream: '#FFF9E3',
+        warmyellow: '#FFD851',
+        darkbrown: '#222112',
+      },
+    },
   },
   plugins: [],
 }
