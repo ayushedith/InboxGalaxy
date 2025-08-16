@@ -37,39 +37,7 @@ export default function Home() {
             <span className="ml-1 font-bold">students, artists, engineers, dreamers, thinkers.</span>
           </p>
         </div>
-
-        {/* Auth block */}
-        <div className="w-full mb-7 flex flex-col items-center">
-          {status === "loading" ? (
-            <p className="text-[#FFD851] font-semibold">Authenticating...</p>
-          ) : session ? (
-            <>
-              <p className="text-[#1B1B1B] text-lg mb-3">
-                Signed in as <strong className="text-[#FFD851]">{session.user?.email}</strong>
-              </p>
-              <button
-                onClick={() => signOut()}
-                className="w-full md:w-40 py-2 px-6 rounded bg-[#FFD851] text-[#1B1B1B] font-bold border border-black/10 shadow hover:bg-[#ffe17a] transition"
-              >
-                Sign Out
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={() => signIn("github")}
-                className="w-full md:w-40 py-2 px-6 rounded bg-[#FFD851] text-[#1B1B1B] font-bold border border-black/10 shadow hover:bg-[#ffe17a] transition"
-              >
-                Sign in with GitHub
-              </button>
-              <p className="mt-2 text-xs text-[#444] text-center">
-                * Only GitHub login supported
-              </p>
-            </>
-          )}
-        </div>
-
-        {/* Page navigation */}
+        
         <div className="flex gap-3 w-full justify-center mb-8">
           <Link href="/about">
             <button className="py-2 px-6 rounded bg-[#FFD851] text-[#1B1B1B] font-semibold shadow hover:bg-[#ffe17a] border border-black/10 transition">
