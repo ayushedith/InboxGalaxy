@@ -1,19 +1,23 @@
 import Link from "next/link";
 import { FiHome, FiInfo, FiStar, FiUserPlus, FiBookOpen, FiKey, FiLogIn, FiUser } from "react-icons/fi";
-
+import Image from "next/image";
+  
 export default function Navbar() {
   return (
     <nav className="w-full px-2 md:px-10 py-3 bg-[#FFF9E3] border-b border-[#FFD851] shadow flex items-center justify-between font-[Quicksand,sans-serif]">
       <div className="flex items-center gap-3">
         {/* Logo on the left */}
+        <Image
+          src="/logoo.png"
+          alt="InboxGalaxy Logo"
+          width={40}
+          height={40}
+          className="rounded-xl border border-[#FFD851] shadow-sm bg-[#FFF9E3] group-hover:scale-105 transition"
+          priority
+        />
         <Link href="/" className="flex items-center gap-2 group">
           {/* Use the cream/yellow themed logo you generated, recommended size: 40-48px */}
-          <img
-            src="/logo.png" // Replace with the actual path from your public folder
-            alt="InboxGalaxy Logo"
-            className="h-10 w-10 rounded-xl border border-[#FFD851] shadow-sm bg-[#FFF9E3] group-hover:scale-105 transition"
-            style={{ objectFit: "contain" }}
-          />
+          
           <span className="text-3xl font-black text-[#1B1B1B] hover:text-[#FFD851] transition tracking-tight">
             InboxGalaxy
           </span>

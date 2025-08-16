@@ -2,6 +2,8 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { FiSmile, FiStar, FiMail, FiShield, FiUsers } from "react-icons/fi";
+import Image from "next/image";
+
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -9,11 +11,14 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full flex flex-col items-center bg-[#FFF9E3] px-4 py-8 font-[Quicksand,sans-serif]">
       <div className="max-w-2xl w-full rounded-xl border border-black/10 bg-white shadow-xl p-8 md:p-12 flex flex-col items-center mb-10">
-        <img
+        <Image
           src="/mascot.png"
           alt="InboxGalaxy Mascot Logo"
-          className="h-16 w-16 rounded-full mb-4 shadow border border-[#7a7575] bg-[#ffffff]"
+          width={64}
+          height={64}
+          className="rounded-xl border border-[#FFD851] shadow bg-[#FFF9E3]"
           style={{ objectFit: "contain" }}
+          priority
         />
         <h1 className="text-4xl md:text-5xl text-center font-extrabold tracking-tight text-[#1B1B1B] mb-2" style={{ fontFamily: "'Quicksand', sans-serif" }}>
           Welcome to <span className="text-[#FFD851]">InboxGalaxy</span>
