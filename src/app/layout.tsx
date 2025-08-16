@@ -10,10 +10,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen bg-cream flex flex-col">
         <NextAuthProvider>
           <Navbar />
-          {children}
+          <main className="flex-1 w-full mx-auto">
+            {children}
+          </main>
           <Footer />
         </NextAuthProvider>
       </body>
