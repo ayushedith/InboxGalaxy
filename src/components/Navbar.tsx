@@ -1,28 +1,27 @@
 import Link from "next/link";
-import { FiHome, FiInfo, FiStar, FiUserPlus, FiBookOpen, FiKey, FiLogIn, FiUser } from "react-icons/fi";
+import { FiHome, FiInfo, FiStar, FiUserPlus, FiBookOpen, FiKey } from "react-icons/fi";
 import Image from "next/image";
-  
+import LoginStatus from "./LoginStatus"; // Adjust the path according to your project structure
+
 export default function Navbar() {
   return (
     <nav className="w-full px-2 md:px-10 py-3 bg-[#FFF9E3] border-b border-[#FFD851] shadow flex items-center justify-between font-[Quicksand,sans-serif]">
       <div className="flex items-center gap-3">
-        {/* Logo on the left */}
         <Image
           src="/logoo.png"
           alt="InboxGalaxy Logo"
           width={40}
           height={40}
-          className="rounded-xl border border-[#FFD851] shadow-sm bg-[#FFF9E3] group-hover:scale-105 transition"
+          className="rounded-xl border border-[#FFD851] shadow-sm bg-[#FFF9E3]"
           priority
         />
         <Link href="/" className="flex items-center gap-2 group">
-          {/* Use the cream/yellow themed logo you generated, recommended size: 40-48px */}
-          
           <span className="text-3xl font-black text-[#1B1B1B] hover:text-[#FFD851] transition tracking-tight">
             InboxGalaxy
           </span>
         </Link>
       </div>
+
       <ul className="flex gap-5 items-center">
         <li>
           <Link href="/" className="flex items-center gap-1 px-3 py-2 rounded font-semibold text-[#1B1B1B] hover:text-[#FFD851] transition">
@@ -60,19 +59,10 @@ export default function Navbar() {
             Subscribe
           </Link>
         </li>
-        <li>
-          <Link href="/login" className="flex items-center gap-1 px-3 py-2 rounded font-semibold text-[#1B1B1B] hover:text-[#FFD851] transition">
-            <FiLogIn className="text-xl" />
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link href="/user" className="flex items-center gap-1 px-3 py-2 rounded font-semibold text-[#1B1B1B] hover:text-[#FFD851] transition">
-            <FiUser className="text-xl" />
-            Profile
-          </Link>
-        </li>
       </ul>
+
+      {/* Auth Section */}
+      <LoginStatus />
     </nav>
   );
 }

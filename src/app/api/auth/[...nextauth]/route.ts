@@ -1,15 +1,22 @@
+// app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
+import GithubProvider from "next-auth/providers/github";
 
 const handler = NextAuth({
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+    GithubProvider({
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
     }),
+    // Add more providers here (Google, etc.)
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+    error: "/error",
+  },
+  theme: {
+    logo: "/ig_logo_theme.png",
+  },
 });
 
-// Export named HTTP handlers for App Router API
 export { handler as GET, handler as POST };
