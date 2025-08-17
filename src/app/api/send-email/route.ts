@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const { subject, html, recipients } = await request.json();
 
     const msg = {
-      to: recipients,
+      to: recipients, // recipients can be a single email or an array of emails
       from: process.env.FROM_EMAIL!,
       subject,
       html,
@@ -18,6 +18,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: (error instanceof Error ? error.message : error) }, { status: 500 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    );
   }
 }

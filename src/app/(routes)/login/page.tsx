@@ -14,7 +14,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     // Check active session on mount
-    const session = supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(({ data }) => {
       if (data.session) setSession(data.session);
     });
     // Subscribe to auth changes
@@ -62,29 +62,32 @@ export default function LoginPage() {
           className="mx-auto mb-6"
           priority
         />
-        <h1 className="text-3xl font-extrabold text-[#1B1B1B] mb-4">Welcome Back to InboxGalaxy</h1>
+        <h1 className="text-3xl font-extrabold text-[#1B1B1B] mb-4">
+          Welcome Back to InboxGalaxy
+        </h1>
 
-        {/* <input
+        <input
           type="email"
           placeholder="Email"
           className="mb-4 p-3 w-full border border-black/20 rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <input
           type="password"
           placeholder="Password"
           className="mb-6 p-3 w-full border border-black/20 rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        /> */}
+        />
 
-        {/* <button
+        <button
           onClick={signInWithEmail}
           className="w-full mb-6 py-3 rounded bg-[#FFD851] font-bold text-[#1B1B1B] shadow hover:bg-[#ffe17a] transition"
         >
           Sign in with Email
-        </button> */}
+        </button>
 
         <button
           onClick={signInWithGitHub}
