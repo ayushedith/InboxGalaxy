@@ -1,28 +1,54 @@
-// src/app/login/page.tsx
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [session, setSession] = useState(null);
 
-  // Redirect if already logged in
   useEffect(() => {
-    if (session) {
-      router.push("/");
-    }
-  }, [session, router]);
+    // Check active session on mount
+    const session = supabase.auth.getSession().then(({ data }) => {
+      if (data.session) setSession(data.session);
+    });
+    // Subscribe to auth changes
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) router.push("/"); // Redirect after login
+    });
+    return () => listener.subscription.unsubscribe();
+  }, [router]);
 
-  if (status === "loading") {
+  async function signInWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) alert(error.message);
+    else alert("Check your email for a login link!");
+  }
+
+  async function signInWithGitHub() {
+    await supabase.auth.signInWithOAuth({ provider: "github" });
+    // Redirect happens automatically after OAuth callback
+  }
+
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFF9E3] font-[Quicksand,sans-serif]">
         <p className="text-[#FFD851] font-semibold text-lg">Loading...</p>
       </div>
     );
+  }
+
+  if (session) {
+    router.push("/");
+    return null; // or loading spinner while redirecting
   }
 
   return (
@@ -36,33 +62,49 @@ export default function LoginPage() {
           className="mx-auto mb-6"
           priority
         />
-        <h1 className="text-3xl font-extrabold text-[#1B1B1B] mb-4">
-          Welcome Back to InboxGalaxy
-        </h1>
-        <p className="mb-8 text-[#222]">
-          Sign in with your account to continue sending and reading newsletters.
-        </p>
+        <h1 className="text-3xl font-extrabold text-[#1B1B1B] mb-4">Welcome Back to InboxGalaxy</h1>
+
+        {/* <input
+          type="email"
+          placeholder="Email"
+          className="mb-4 p-3 w-full border border-black/20 rounded"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="mb-6 p-3 w-full border border-black/20 rounded"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        /> */}
+
+        {/* <button
+          onClick={signInWithEmail}
+          className="w-full mb-6 py-3 rounded bg-[#FFD851] font-bold text-[#1B1B1B] shadow hover:bg-[#ffe17a] transition"
+        >
+          Sign in with Email
+        </button> */}
 
         <button
-          onClick={() => signIn("github")}
-          className="w-full mb-4 py-3 rounded bg-[#FFD851] font-bold text-[#1B1B1B] shadow hover:bg-[#ffe17a] transition"
+          onClick={signInWithGitHub}
+          className="w-full py-3 rounded bg-[#FFD851] font-bold text-[#1B1B1B] shadow hover:bg-[#ffe17a] transition"
         >
           Sign in with GitHub
         </button>
 
-        {/* Add more providers like Google if desired */}
-        {/* <button
-          onClick={() => signIn("google")}
-          className="w-full py-3 rounded bg-[#FFD851] font-bold text-[#1B1B1B] shadow hover:bg-[#ffe17a] transition"
-        >
-          Sign in with Google
-        </button> */}
-
         <p className="mt-6 text-xs text-[#555]">
-          By signing in, you agree to our <a href="/terms" className="text-[#FFD851] underline">Terms of Service</a> and <a href="/privacy" className="text-[#FFD851] underline">Privacy Policy</a>.
+          By signing in, you agree to our{" "}
+          <a href="/terms" className="text-[#FFD851] underline">
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="/privacy" className="text-[#FFD851] underline">
+            Privacy Policy
+          </a>
+          .
         </p>
       </div>
     </div>
   );
 }
-

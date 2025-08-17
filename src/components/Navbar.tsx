@@ -74,13 +74,13 @@ export default function Navbar() {
         )}
 
         {/* Conditionally render Login if NOT logged in */}
-        {!session && (
+        {/* {!session && (
           <li>
             <Link href="/login" className="nav-link-style">
               Login
             </Link>
           </li>
-        )}
+        )} */}
       </ul>
 
       {/* Auth Section */}
