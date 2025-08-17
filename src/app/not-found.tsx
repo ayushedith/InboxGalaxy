@@ -1,15 +1,18 @@
-// src/app/not-found.tsx or src/app/404.tsx (Next.js App Router)
+
 
 import Link from "next/link";
+import Image from "next/image";
+
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#FFF9E3] flex flex-col items-center justify-center px-6">
       {/* 404 mascot/image with transparent background */}
-      <img
-        src="/igNotFound.png" // Use your generated image file!
+      <Image
+        src="/igNotFound.png"
         alt="404 Envelope Character"
-        className="h-48 w-auto mb-8"
+        height={192}
+        width={192}
       />
       <h1 className="text-5xl font-extrabold text-[#FFD851] mb-2 font-[Quicksand,sans-serif]">
         404

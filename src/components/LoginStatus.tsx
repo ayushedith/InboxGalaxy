@@ -12,7 +12,7 @@ export default function LoginStatus() {
     let isMounted = true;
     async function fetchUser() {
       setLoading(true);
-      const { data, error } = await supabase.auth.getUser();
+      const { data } = await supabase.auth.getUser();
       if (isMounted) {
         setUser(data?.user ?? null);
         setLoading(false);
@@ -63,15 +63,23 @@ export default function LoginStatus() {
         >
           Sign Out
         </button>
+        <Link
+          href="/user"
+          className="py-1 px-4 rounded bg-[#FFD851] text-[#1B1B1B] font-bold border border-black/10 shadow hover:bg-[#ffe17a] transition"
+        >
+          Profile
+        </Link>
       </div>
     );
   }
 
+  // Only show login link if not logged in
   return (
-    <button className="py-1 px-4 rounded bg-[#FFD851] text-[#1B1B1B] font-bold border border-black/10 shadow hover:bg-[#ffe17a] transition">
-      <Link href="/login" className="nav-link-style">
-        Login
-      </Link>
-    </button>
+    <Link
+      href="/login"
+      className="py-1 px-4 rounded bg-[#FFD851] text-[#1B1B1B] font-bold border border-black/10 shadow hover:bg-[#ffe17a] transition"
+    >
+      Login
+    </Link>
   );
 }

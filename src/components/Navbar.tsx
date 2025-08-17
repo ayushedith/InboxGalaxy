@@ -3,12 +3,9 @@
 import Link from "next/link";
 import { FiHome, FiInfo, FiStar, FiUserPlus, FiBookOpen, FiKey } from "react-icons/fi";
 import Image from "next/image";
-import LoginStatus from "./LoginStatus"; 
-import { useSession } from "next-auth/react";
-
+import LoginStatus from "./LoginStatus";
 
 export default function Navbar() {
-  const { data: session } = useSession();
   return (
     <nav className="w-full px-2 md:px-10 py-3 bg-[#FFF9E3] border-b border-[#FFD851] shadow flex items-center justify-between font-[Quicksand,sans-serif]">
       <div className="flex items-center gap-3">
@@ -64,26 +61,9 @@ export default function Navbar() {
             Subscribe
           </Link>
         </li>
-        {session && (
-          <li>
-            <Link href="/user" className="nav-link-style">
-              <FiUserPlus />
-              Profile
-            </Link>
-          </li>
-        )}
-
-        {/* Conditionally render Login if NOT logged in */}
-        {/* {!session && (
-          <li>
-            <Link href="/login" className="nav-link-style">
-              Login
-            </Link>
-          </li>
-        )} */}
       </ul>
 
-      {/* Auth Section */}
+      {/* Use LoginStatus component to handle auth display and actions */}
       <LoginStatus />
     </nav>
   );
