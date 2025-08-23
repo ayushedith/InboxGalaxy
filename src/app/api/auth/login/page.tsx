@@ -3,11 +3,12 @@
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   // Redirect if logged in
   useEffect(() => {
@@ -22,6 +23,19 @@ export default function LoginPage() {
       </div>
     );
   }
+
+  // Show error if unauthenticated
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      // Check for error in URL
+      const params = new URLSearchParams(window.location.search);
+      const err = params.get("error");
+      if (err) {
+        setError("Login failed: " + err);
+        console.error("NextAuth error:", err);
+      }
+    }
+  }, [status]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#FFF9E3] px-6 font-[Quicksand,sans-serif]">
@@ -40,6 +54,10 @@ export default function LoginPage() {
         <p className="mb-8 text-[#222]">
           Sign in with your account to continue sending and reading newsletters.
         </p>
+
+        {error && (
+          <div className="mb-4 text-red-600 font-semibold">{error}</div>
+        )}
 
         <button
           onClick={() => signIn("github")}

@@ -10,9 +10,22 @@ export default function NewsletterComposer() {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
 
+  // Validate emails
+  function validateEmails(emails: string[]) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emails.every(email => emailRegex.test(email));
+  }
+
   async function handleSend() {
     if (!subject || !markdown) {
       setMessage({ type: "error", text: "Please fill in both the subject and content." });
+      return;
+    }
+
+    // Example: get subscribers from somewhere (replace with real logic)
+    const subscribers = ["example@example.com"]; // TODO: fetch from backend
+    if (!validateEmails(subscribers)) {
+      setMessage({ type: "error", text: "Invalid subscriber email(s)." });
       return;
     }
 
@@ -29,7 +42,7 @@ export default function NewsletterComposer() {
         body: JSON.stringify({
           subject,
           html: htmlContent,
-          recipients: ["example@example.com"], // Replace with your subscribers list
+          recipients: subscribers,
         }),
       });
       const data = await res.json();

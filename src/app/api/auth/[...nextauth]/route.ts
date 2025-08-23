@@ -3,12 +3,16 @@ import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 
+if (!process.env.GITHUB_ID || !process.env.GITHUB_SECRET) {
+  throw new Error("Missing GITHUB_ID or GITHUB_SECRET in environment variables.");
+}
+
 const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
   session: {
@@ -22,7 +26,7 @@ const handler = NextAuth({
     async session({ session, user }) {
       // Attach Prisma user id to the session
       if (session.user) {
-        session.user.id = user.id;
+        (session.user as any).id = user.id;
       }
       return session;
     },
