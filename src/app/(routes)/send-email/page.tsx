@@ -24,7 +24,9 @@ export default function SendEmailPage() {
       return;
     }
 
-    if (!validateEmails(recipients)) {
+    const emailList = recipients.split(",").map(e => e.trim());
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailList.every(email => emailRegex.test(email))) {
       setMessage({ type: "error", text: "Please enter valid email addresses separated by commas." });
       return;
     }
@@ -41,7 +43,7 @@ export default function SendEmailPage() {
         body: JSON.stringify({
           subject,
           html,
-          recipients: recipients.split(",").map(e => e.trim()),
+          recipients: emailList,
         }),
       });
 
